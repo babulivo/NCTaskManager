@@ -7,12 +7,12 @@ public class Task {
     private int end;
     private int interval;
     private boolean active;
-    private boolean isRepeated;
+    private boolean repeated;
 
     public Task(String title, int time) {
         this.title = title;
         this.time = time;
-        this.isRepeated = false;
+        this.repeated = false;
     }
 
     public Task(String title, int start, int end, int interval) {
@@ -20,7 +20,7 @@ public class Task {
         this.start = start;
         this.end = end;
         this.interval = interval;
-        this.isRepeated = true;
+        this.repeated = true;
     }
 
     public String getTitle() {
@@ -32,27 +32,27 @@ public class Task {
     }
 
     public int getTime() {
-        if (isRepeated) return start;
+        if (repeated) return start;
         return time;
     }
 
     public void setTime(int time) {
         this.time = time;
-        isRepeated = false;
+        repeated = false;
     }
 
     public int getStartTime() {
-        if (!isRepeated) return time;
+        if (!repeated) return time;
         return start;
     }
 
     public int getEndTime() {
-        if (!isRepeated) return time;
+        if (!repeated) return time;
         return end;
     }
 
     public int getRepeatInterval() {
-        if (!isRepeated) return 0;
+        if (!repeated) return 0;
         return interval;
     }
 
@@ -60,11 +60,11 @@ public class Task {
         this.start = start;
         this.end = end;
         this.interval = interval;
-        this.isRepeated = true;
+        this.repeated = true;
     }
 
     public boolean isRepeated() {
-        return isRepeated;
+        return repeated;
     }
 
     public boolean isActive() {
@@ -78,7 +78,7 @@ public class Task {
     public int nextTimeAfter(int current) {
         if (!isActive()) return -1;
 
-        if (isRepeated) {
+        if (repeated) {
 
             if (start > current) {
                 return start;
