@@ -25,6 +25,10 @@ public class ArrayTaskList {
     }
 
     public void add(Task task) {
+        if (task == null) {
+            throw new IllegalArgumentException("Task must not be null");
+        }
+
         if (size != 0 && size == realSize)
             resize("increase");
         taskList[size] = task;
@@ -54,7 +58,7 @@ public class ArrayTaskList {
 
     public Task getTask(int index) {
         if (index >= size || index < 0) {
-            return null;
+            throw new IndexOutOfBoundsException("There is no element with this index");
         } else {
             return taskList[index];
         }
