@@ -7,34 +7,37 @@ public class Main {
 		Task task2 = new Task("Swimming", 2);
 		Task task3 = new Task("Playing PC", 3);
 		Task task4 = new Task("Date", 4);
+		Task task5 = new Task("Football", 1);
 
-		ArrayTaskList arrayTaskList = new ArrayTaskList();
+		LinkedTaskList linkedTaskList = new LinkedTaskList();
 
-		System.out.println(arrayTaskList.size());
+		System.out.println(linkedTaskList.size());
 
-		arrayTaskList.add(task1);
-		arrayTaskList.add(task2);
-		arrayTaskList.add(task3);
-		arrayTaskList.add(task4);
+		linkedTaskList.add(task1);
+		linkedTaskList.add(task2);
+		linkedTaskList.add(task3);
+		linkedTaskList.add(task4);
+		linkedTaskList.add(task5);
 
-		System.out.println(arrayTaskList.size());
+		System.out.println(linkedTaskList.size());
 
-		arrayTaskList.remove(task3);
-		arrayTaskList.remove(task4);
-		arrayTaskList.remove(task1);
-		arrayTaskList.remove(task2);
+		linkedTaskList.remove(task1);
+		linkedTaskList.remove(task4);
+		linkedTaskList.remove(task3);
+		linkedTaskList.remove(task1);
+		linkedTaskList.remove(task2);
 
-		System.out.println(arrayTaskList.size());
+		System.out.println(linkedTaskList.size());
 
-		arrayTaskList.add(task1);
-		arrayTaskList.add(task2);
-		arrayTaskList.add(task2);
-		arrayTaskList.add(task2);
-		arrayTaskList.add(task2);
-		arrayTaskList.add(task2);
-		arrayTaskList.add(task2);
-		arrayTaskList.add(task2);
+		linkedTaskList.add(task1);
+		linkedTaskList.add(task2);
+		linkedTaskList.add(task2);
+		linkedTaskList.add(task2);
+		linkedTaskList.add(task2);
+		linkedTaskList.add(task2);
+		linkedTaskList.add(task2);
+		linkedTaskList.add(task2);
 
-		System.out.println(arrayTaskList.size());
+		System.out.println(linkedTaskList.size());
 	}
 }

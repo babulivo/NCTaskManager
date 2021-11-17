@@ -1,5 +1,7 @@
 package ua.edu.sumdu.j2se.podveza.tasks;
 
+import java.util.Objects;
+
 public class Task {
     private String title;
     private int time;
@@ -10,12 +12,38 @@ public class Task {
     private boolean repeated;
 
     public Task(String title, int time) {
+        if (time < 0) {throw new IllegalArgumentException("Time less than zero");}
+
         this.title = title;
         this.time = time;
         this.repeated = false;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return time == task.time && start == task.start
+                && end == task.end && interval == task.interval
+                && active == task.active && repeated == task.repeated
+                && Objects.equals(title, task.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, time, start, end, interval, active, repeated);
+    }
+
     public Task(String title, int start, int end, int interval) {
+        if (start < 0) {
+            throw new IllegalArgumentException("Start time is less than zero");
+        } else if (end < 0) {
+            throw new IllegalArgumentException("End time is less than zero");
+        } else if (interval <= 0) {
+            throw new IllegalArgumentException("Interval time is less than or equal to zero");
+        }
+
         this.title = title;
         this.start = start;
         this.end = end;
