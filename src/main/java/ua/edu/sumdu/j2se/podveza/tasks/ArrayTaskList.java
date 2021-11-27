@@ -1,7 +1,7 @@
 package ua.edu.sumdu.j2se.podveza.tasks;
 
-public class ArrayTaskList {
-    private int size = 0;
+public class ArrayTaskList extends AbstractTaskList{
+    //private int size = 0;
     private int realSize = 3;
     private Task[] taskList = new Task[realSize];
 
@@ -24,6 +24,7 @@ public class ArrayTaskList {
         }
     }
 
+    @Override
     public void add(Task task) {
         if (task == null) {
             throw new IllegalArgumentException("Task must not be null");
@@ -35,6 +36,7 @@ public class ArrayTaskList {
         size++;
     }
 
+    @Override
     public boolean remove(Task task) {
         for (int i = 0; i < size; i++) {
             if(taskList[i].equals(task)) { // equals
@@ -52,10 +54,9 @@ public class ArrayTaskList {
         return false;
     }
 
-    public int size() {
-        return size;
-    }
+    //public int size() {return size;}
 
+    @Override
     public Task getTask(int index) {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("There is no element with this index");
@@ -64,6 +65,7 @@ public class ArrayTaskList {
         }
     }
 
+    /*@Override
     public ArrayTaskList incoming(int from, int to) {
         ArrayTaskList incomingList = new ArrayTaskList();
         for (Task fromTaskList: taskList) {
@@ -75,5 +77,5 @@ public class ArrayTaskList {
             }
         }
         return incomingList;
-    }
+    }*/
 }
