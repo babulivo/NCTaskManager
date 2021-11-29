@@ -1,7 +1,7 @@
 package ua.edu.sumdu.j2se.podveza.tasks;
 
-public class LinkedTaskList {
-    private int size;
+public class LinkedTaskList extends AbstractTaskList{
+    //private int size;
     private TaskNode head;
 
    public class TaskNode {
@@ -14,6 +14,7 @@ public class LinkedTaskList {
        }
    }
 
+    @Override
     public void add(Task task) {
         if (task == null) {throw new IllegalArgumentException("Task must not be null");}
 
@@ -31,6 +32,7 @@ public class LinkedTaskList {
         ++size;
     }
 
+    @Override
     public boolean remove(Task task) {
         TaskNode currentTaskNode = head;
         TaskNode previousTaskNode = null;
@@ -51,10 +53,9 @@ public class LinkedTaskList {
         return false;
     }
 
-    public int size() {
-        return size;
-    }
+    //public int size() {return size;}
 
+    @Override
     public Task getTask(int index) {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("There is no element with this index");
@@ -68,6 +69,7 @@ public class LinkedTaskList {
         return null;
     }
 
+    /*@Override
     public LinkedTaskList incoming(int from, int to) {
         LinkedTaskList incomingList = new LinkedTaskList();
         TaskNode currentTaskNode = head;
@@ -80,5 +82,5 @@ public class LinkedTaskList {
             currentTaskNode = currentTaskNode.next;
         }
         return incomingList;
-    }
+    }*/
 }
