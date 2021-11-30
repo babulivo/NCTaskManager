@@ -1,9 +1,17 @@
 package ua.edu.sumdu.j2se.podveza.tasks;
 
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+
 public class ArrayTaskList extends AbstractTaskList{
-    //private int size = 0;
     private int realSize = 3;
     private Task[] taskList = new Task[realSize];
+
+    public ArrayTaskList() {
+        listType = ListTypes.types.ARRAY;
+    }
 
     private void resize(String condition){
         Task[] copyTaskList;
@@ -54,8 +62,6 @@ public class ArrayTaskList extends AbstractTaskList{
         return false;
     }
 
-    //public int size() {return size;}
-
     @Override
     public Task getTask(int index) {
         if (index >= size || index < 0) {
@@ -63,6 +69,58 @@ public class ArrayTaskList extends AbstractTaskList{
         } else {
             return taskList[index];
         }
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new Iterator<Task>() {
+
+            private int currentIndex;
+            private int removed;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < size && taskList[currentIndex] != null;
+            }
+
+            @Override
+            public Task next() {
+                if (hasNext()) {
+                    removed = currentIndex;
+                    return taskList[currentIndex++];
+                }
+                throw new NoSuchElementException();
+            }
+
+            @Override
+            public void remove() {
+                if (currentIndex == 0) {
+                    throw new IllegalStateException();
+                }
+                ArrayTaskList.this.remove(taskList[removed]);
+                --currentIndex;
+            }
+        };
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArrayTaskList that = (ArrayTaskList) o;
+        return realSize == that.realSize && Arrays.equals(taskList, that.taskList);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(realSize);
+        result = 31 * result + Arrays.hashCode(taskList);
+        return result;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     /*@Override
