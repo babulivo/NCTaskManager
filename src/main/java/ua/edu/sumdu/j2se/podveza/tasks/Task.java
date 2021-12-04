@@ -2,7 +2,7 @@ package ua.edu.sumdu.j2se.podveza.tasks;
 
 import java.util.Objects;
 
-public class Task {
+public class Task implements Cloneable{
     private String title;
     private int time;
     private int start;
@@ -17,22 +17,6 @@ public class Task {
         this.title = title;
         this.time = time;
         this.repeated = false;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return time == task.time && start == task.start
-                && end == task.end && interval == task.interval
-                && active == task.active && repeated == task.repeated
-                && Objects.equals(title, task.title);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, time, start, end, interval, active, repeated);
     }
 
     public Task(String title, int start, int end, int interval) {
@@ -122,5 +106,47 @@ public class Task {
             if (time > current) return time;
             else return -1;
         }
+    }
+
+    @Override
+    public Task clone() throws CloneNotSupportedException {
+        Task cloned = (Task) super.clone();
+        cloned.title = this.title;
+        cloned.time = this.time;
+        cloned.start = this.start;
+        cloned.end = this.end;
+        cloned.interval = this.interval;
+        cloned.active = this.active;
+        cloned.repeated = this.repeated;
+        return cloned;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "title='" + title + '\'' +
+                ", time=" + time +
+                ", start=" + start +
+                ", end=" + end +
+                ", interval=" + interval +
+                ", active=" + active +
+                ", repeated=" + repeated +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return time == task.time && start == task.start
+                && end == task.end && interval == task.interval
+                && active == task.active && repeated == task.repeated
+                && Objects.equals(title, task.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, time, start, end, interval, active, repeated);
     }
 }

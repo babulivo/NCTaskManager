@@ -1,21 +1,21 @@
 package ua.edu.sumdu.j2se.podveza.tasks;
 
-public abstract class AbstractTaskList {
+import java.util.Objects;
+
+public abstract class AbstractTaskList implements Iterable<Task>{
+    protected ListTypes.types listType;
     protected int size;
 
     public abstract void add(Task task);
 
     public abstract boolean remove(Task task);
 
-    public int size(){return size;};
+    public int size(){return size;}
 
     public abstract Task getTask(int index);
 
     public AbstractTaskList incoming(int from, int to) {
-        AbstractTaskList incomingList = this.getClass().getSimpleName().equals("LinkedTaskList") ?
-                TaskListFactory.createTaskList(ListTypes.types.LINKED) :
-                TaskListFactory.createTaskList(ListTypes.types.ARRAY);
-
+        AbstractTaskList incomingList = TaskListFactory.createTaskList(listType);
         Task task;
         for (int i = 0; i < size; i++) {
             task = getTask(i);
@@ -25,5 +25,14 @@ public abstract class AbstractTaskList {
             }
         }
         return incomingList;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        AbstractTaskList clonedList = TaskListFactory.createTaskList(listType);
+        for (int i = 0; i < size; i++) {
+            clonedList.add(getTask(i));
+        }
+        return clonedList;
     }
 }

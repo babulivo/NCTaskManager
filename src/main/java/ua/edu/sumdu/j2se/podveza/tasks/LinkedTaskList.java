@@ -1,10 +1,13 @@
 package ua.edu.sumdu.j2se.podveza.tasks;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+
 public class LinkedTaskList extends AbstractTaskList{
-    //private int size;
     private TaskNode head;
 
-   public class TaskNode {
+    public class TaskNode {
        private Task task;
        private TaskNode next;
 
@@ -13,6 +16,10 @@ public class LinkedTaskList extends AbstractTaskList{
            next = null;
        }
    }
+
+    public LinkedTaskList() {
+        listType = ListTypes.types.LINKED;
+    }
 
     @Override
     public void add(Task task) {
@@ -53,8 +60,6 @@ public class LinkedTaskList extends AbstractTaskList{
         return false;
     }
 
-    //public int size() {return size;}
-
     @Override
     public Task getTask(int index) {
         if (index >= size || index < 0) {
@@ -67,6 +72,63 @@ public class LinkedTaskList extends AbstractTaskList{
             }
         }
         return null;
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new Iterator<Task>() {
+
+            private int currentIndex;
+            private int removed;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < size;
+            }
+
+            @Override
+            public Task next() {
+                if (hasNext()) {
+                    removed = currentIndex;
+                    return getTask(currentIndex++);
+                }
+                throw new NoSuchElementException();
+            }
+
+            @Override
+            public void remove() {
+                if (currentIndex < 1) {
+                    throw new IllegalStateException();
+                }
+                LinkedTaskList.this.remove(getTask(removed));
+                --currentIndex;
+            }
+        };
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LinkedTaskList tasks = (LinkedTaskList) o;
+        for (int i = 0; i < size; i++) {
+            if(!tasks.getTask(i).equals(getTask(i))) return false;
+        }
+        return size == tasks.size;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 1;
+        for (int i = 0; i < size; i++) {
+            hash = 31 * hash + ((getTask(i) == null) ? 0 : getTask(i).hashCode());
+        }
+        return hash;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     /*@Override
