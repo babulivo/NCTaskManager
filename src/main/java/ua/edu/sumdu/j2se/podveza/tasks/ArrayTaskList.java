@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class ArrayTaskList extends AbstractTaskList{
     private int realSize = 3;
@@ -121,6 +122,15 @@ public class ArrayTaskList extends AbstractTaskList{
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    @Override
+    public Stream<Task> getStream() {
+        Task[] streamList = new Task[size];
+        for (int i = 0; i < size; i++) {
+            streamList[i] = taskList[i];
+        }
+        return Arrays.stream(streamList);
     }
 
     /*@Override
