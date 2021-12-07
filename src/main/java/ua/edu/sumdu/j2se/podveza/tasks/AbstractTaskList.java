@@ -1,6 +1,7 @@
 package ua.edu.sumdu.j2se.podveza.tasks;
 
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public abstract class AbstractTaskList implements Iterable<Task>{
     protected ListTypes.types listType;
@@ -14,8 +15,15 @@ public abstract class AbstractTaskList implements Iterable<Task>{
 
     public abstract Task getTask(int index);
 
-    public AbstractTaskList incoming(int from, int to) {
+    public final AbstractTaskList incoming(int from, int to) {
         AbstractTaskList incomingList = TaskListFactory.createTaskList(listType);
+        Stream<Task> stream = getStream();
+
+        stream.filter(Task -> Task.nextTimeAfter(from) != -1 && Task.nextTimeAfter(from) < to)
+                .forEach(Task -> incomingList.add(Task));
+        return incomingList;
+
+        /*AbstractTaskList incomingList = TaskListFactory.createTaskList(listType);
         Task task;
         for (int i = 0; i < size; i++) {
             task = getTask(i);
@@ -24,7 +32,7 @@ public abstract class AbstractTaskList implements Iterable<Task>{
                 incomingList.add(task);
             }
         }
-        return incomingList;
+        return incomingList;*/
     }
 
     @Override
@@ -35,4 +43,6 @@ public abstract class AbstractTaskList implements Iterable<Task>{
         }
         return clonedList;
     }
+
+    public abstract Stream<Task> getStream();
 }

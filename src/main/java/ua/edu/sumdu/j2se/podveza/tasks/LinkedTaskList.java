@@ -1,8 +1,7 @@
 package ua.edu.sumdu.j2se.podveza.tasks;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class LinkedTaskList extends AbstractTaskList{
     private TaskNode head;
@@ -129,6 +128,15 @@ public class LinkedTaskList extends AbstractTaskList{
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    @Override
+    public Stream<Task> getStream() {
+        List<Task> streamList = new LinkedList<Task>();
+        for (int i = 0; i < size; i++) {
+            streamList.add(getTask(i));
+        }
+        return streamList.stream();
     }
 
     /*@Override
